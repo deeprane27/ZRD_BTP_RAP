@@ -1,0 +1,135 @@
+@Metadata.layer: #CORE
+@UI:{
+        headerInfo:{ typeName: 'Travel' ,
+                   typeNamePlural: 'Travels',
+                   title: { label: 'Travel' ,  value: 'TravelId', type: #STANDARD },
+                   description: { value: 'Description' }
+    },
+
+        presentationVariant: [{ sortOrder: [{ by: 'TravelId' ,direction: #DESC }],   // Sorting table by travel ID
+                           visualizations: [{ type: #AS_LINEITEM }] }]
+                 }
+annotate view ZC_RD_TRAV with
+{
+  @UI.hidden: true
+  TravelUuid;
+
+  // Header level Settings are wriiten in FACET
+  @UI: {  facet: [
+                    {   id: 'Travelid' ,                          // Main Group Travel
+                        type: #COLLECTION,
+                        label: 'Travel ',
+                        position: 10
+                    },
+
+                    {   id: 'Travel' ,
+                        purpose: #STANDARD,
+                        type: #IDENTIFICATION_REFERENCE,
+                        label: 'Travel Details',
+                        parentId: 'Travelid',                      // subgroup of TravelID
+                        position: 10
+                    },
+
+                    {   id: 'Date' ,
+                        purpose: #STANDARD,
+                        type: #FIELDGROUP_REFERENCE,
+                        label: 'Travel Dates',
+                        parentId: 'Travelid',                       // subgroup of TravelID
+                        targetQualifier: 'Dates',
+                        position: 20
+                    },
+
+                    {   id: 'Price' ,
+                        purpose: #STANDARD,
+                        type: #FIELDGROUP_REFERENCE,
+                        label: 'Travel Prices',
+                        parentId: 'Travelid',                       // subgroup of TravelID
+                        targetQualifier: 'Prices',
+                        position: 30
+                    },
+
+                    {  id:'Total_Price',
+                        purpose: #HEADER,
+                        type:#DATAPOINT_REFERENCE,                  // Datapoint Reference for status
+                        targetQualifier: 'Status',
+                        position: 10    },
+
+                    {   id:'STATUS',
+                        purpose: #HEADER,
+                        type:#DATAPOINT_REFERENCE,                  // Datapoint Reference for Booking fee => to be appear in header along with travel id
+                        targetQualifier: 'Price',
+                        position: 20    }
+                        
+                    /* {   id:'Booking',
+                        purpose: #STANDARD,
+                        type:#LINEITEM_REFERENCE,
+                        label: 'Booking',
+                        targetElement: '_booking',
+                        position: 20
+                    }*/    
+                         ]
+
+       }
+
+
+  @UI:{ lineItem: [{ position: 10 }],                     // on what position it should appear
+        identification: [{ position: 10 }],                              // Under group Date { targetQualifier: 'Dates'  }
+        selectionField: [{ position: 10 }]
+        }
+  TravelId;
+
+  @UI:{ lineItem: [{ position: 20 }],
+        identification: [{ position: 20 }],
+        selectionField: [{ position: 20 }] }              // To enable default Filter option on the top   
+  AgencyId;
+
+  @UI:{ lineItem: [{ position: 30 }],
+        identification: [{ position: 30 }],
+        selectionField: [{ position: 30 }],
+        textArrangement: #TEXT_ONLY }
+  CustomerId;
+
+  @UI:{ lineItem: [{ position: 40 }],
+        //identification: [{ position: 40 }]
+        fieldGroup: [{ qualifier: 'Dates' , position: 10 }]              // Under group Date { targetQualifier: 'Dates'  }
+        }
+  BeginDate;
+
+  @UI:{ lineItem: [{ position: 50 }],
+        // identification: [{ position: 50 }]                            // Under identification Travel group
+        fieldGroup: [{ qualifier: 'Dates' , position: 20 }]              // Under group Date { targetQualifier: 'Dates'  }
+        }
+  EndDate;
+
+  @UI:{ lineItem: [{ position: 60 }],
+        // identification: [{ position: 60 }]
+        fieldGroup: [{ qualifier: 'Prices' , position: 10 }]             // Under group Prices { targetQualifier: 'Prices' }
+      }
+
+  @UI.dataPoint:{ qualifier: 'Price', title: 'Total Price' }             // Datapoint Reference
+  BookingFee;
+
+  @UI:{ lineItem: [{ position: 70 }],
+        // identification: [{ position: 70 }]
+        fieldGroup: [{ qualifier: 'Prices' , position: 20 }]             // Under group Prices { targetQualifier: 'Prices' }
+      }
+  TotalPrice;
+
+  @UI:{ lineItem: [{ position: 80 }],
+        identification: [{ position: 80 }] }
+  Description;
+
+  @UI:{ lineItem: [{ position: 90 }],
+        identification: [{ position: 90 }] }
+
+  @UI.dataPoint:{ qualifier: 'Status', title: 'Status' }            // Datapoint Reference
+  Status;
+
+  @UI.hidden: true
+  Lastchangedat;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+
+}

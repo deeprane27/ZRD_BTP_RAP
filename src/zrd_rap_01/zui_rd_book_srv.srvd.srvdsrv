@@ -1,0 +1,4 @@
+@EndUserText.label: 'SRV DEF for booking'
+define service ZUI_RD_BOOK_SRV {
+  expose ZC_RD_BOOK;
+}

@@ -1,0 +1,4 @@
+@EndUserText.label: 'Travel UI service binding'
+define service Zui_travel_rd_v4 {
+  expose ZI_rd_trav_bs;
+}
