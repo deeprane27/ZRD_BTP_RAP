@@ -1,4 +1,10 @@
-CLASS zcl_bp_i_rd_trav_bs DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_rd_trav_bs.
+class ZCL_BP_I_RD_TRAV_BS definition
+  public
+  create private .
+
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
